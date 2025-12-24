@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+body {
+  @apply bg-gradient-to-br from-[#0f172a] to-[#020617] text-slate-100;
+}
+
+.card {
+  @apply bg-[#1e293b] rounded-xl shadow-lg border border-white/10;
+}
