@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Copy, Trash2 } from "lucide-react";
@@ -95,7 +97,7 @@ export default function ClipboardEditor() {
               className="rounded-xl bg-[#0f172a] border border-white/10 p-4 group"
             >
               <div className="flex justify-between gap-4">
-                <p className="text-sm whitespace-pre-wrap break-words">
+                <p className="text-sm whitespace-pre-wrap wrap-break-word">
                   {item.text}
                 </p>
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { useClipboard } from "../context/ClipboardContext";
 import FolderItem from "./FolderItem";

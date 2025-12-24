@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/set-state-in-effect */
 import FileItem from "./FileItem";
 import { useClipboard } from "../context/ClipboardContext";

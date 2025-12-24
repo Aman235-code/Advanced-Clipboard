@@ -1,10 +1,9 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
-import React from "react";
 
 const ClipboardContext = createContext();
-
 const STORAGE_KEY = "advanced-clipboard";
 
 export const ClipboardProvider = ({ children }) => {
@@ -20,7 +19,7 @@ export const ClipboardProvider = ({ children }) => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(folders));
   }, [folders]);
 
-  /* --------- 🔥 MIGRATE OLD STRING DATA --------- */
+  /* --------- MIGRATE OLD STRING CONTENT --------- */
   useEffect(() => {
     setFolders((prev) =>
       prev.map((folder) => ({
@@ -37,8 +36,20 @@ export const ClipboardProvider = ({ children }) => {
     );
   }, []);
 
+  /* ---------------- SELECT FILE (IMPORTANT) ---------------- */
+  const selectActiveFile = (folderId, file) => {
+    const folder = folders.find((f) => f.id === folderId);
+    if (!folder) return;
+
+    setActiveFile({
+      ...file,
+      folderId,
+      folderName: folder.name,
+    });
+  };
+
   /* ---------------- FOLDER ---------------- */
-  const addFolder = (name) => {
+  const addFolder = (name = "New Folder") => {
     setFolders([...folders, { id: uuid(), name, files: [] }]);
   };
 
@@ -46,13 +57,15 @@ export const ClipboardProvider = ({ children }) => {
     setFolders(
       folders.map((f) => (f.id === folderId ? { ...f, name } : f))
     );
+
+    if (activeFile?.folderId === folderId) {
+      setActiveFile({ ...activeFile, folderName: name });
+    }
   };
 
   const deleteFolder = (folderId) => {
     setFolders(folders.filter((f) => f.id !== folderId));
-    if (activeFile && folders.find(f => f.id === folderId)?.files.some(fl => fl.id === activeFile.id)) {
-      setActiveFile(null);
-    }
+    if (activeFile?.folderId === folderId) setActiveFile(null);
   };
 
   /* ---------------- FILE ---------------- */
@@ -67,7 +80,7 @@ export const ClipboardProvider = ({ children }) => {
                 {
                   id: uuid(),
                   name,
-                  content: [], // ✅ ALWAYS ARRAY
+                  content: [],
                 },
               ],
             }
@@ -84,6 +97,7 @@ export const ClipboardProvider = ({ children }) => {
           : f
       )
     );
+
     if (activeFile?.id === fileId) setActiveFile(null);
   };
 
@@ -102,6 +116,7 @@ export const ClipboardProvider = ({ children }) => {
     }
   };
 
+  /* ---------------- CLIPBOARD ITEMS ---------------- */
   const updateFileContent = (fileId, content) => {
     setFolders(
       folders.map((f) => ({
@@ -121,14 +136,17 @@ export const ClipboardProvider = ({ children }) => {
     <ClipboardContext.Provider
       value={{
         folders,
+        activeFile,
+
         addFolder,
-        deleteFolder,
         renameFolder,
+        deleteFolder,
+
         addFile,
         deleteFile,
         renameFile,
-        activeFile,
-        setActiveFile,
+
+        selectActiveFile, // ✅ USE THIS, NOT setActiveFile
         updateFileContent,
       }}
     >
