@@ -8,3 +8,12 @@ body {
 .card {
   @apply bg-[#1e293b] rounded-xl shadow-lg border border-white/10;
 }
+
+.sidebar-scroll {
+  scrollbar-width: none;
+}
+
+.sidebar-scroll::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
