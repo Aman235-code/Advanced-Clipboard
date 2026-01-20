@@ -136,7 +136,7 @@ export default function ClipboardEditor() {
               className="rounded-xl bg-[#0f172a] border border-white/10 p-4 group"
             >
               <div className="flex justify-between gap-4">
-                <p className="text-sm whitespace-pre-wrap break-words text-slate-200">
+                <p className="text-sm whitespace-pre-wrap wrap-break-word text-slate-200">
                   {item.text}
                 </p>
 

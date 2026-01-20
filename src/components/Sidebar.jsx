@@ -14,15 +14,19 @@ export default function Sidebar() {
   );
 
   return (
-    <aside className="w-72 p-4 bg-[#020617] border-r border-white/10">
+    <aside className="w-72 h-screen flex flex-col p-4 bg-[#020617] border-r border-white/10">
       {/* Header */}
-      <div className="flex items-center gap-2 mb-6">
-        <Folder size={20} className="text-indigo-400" />
-        <h2 className="font-semibold text-lg text-slate-200">Clipboard</h2>
+      <div className="flex items-center gap-2 mb-6 shrink-0">
+        <div className="p-2 rounded-xl bg-indigo-500/10">
+          <Folder size={20} className="text-indigo-400" />
+        </div>
+        <h2 className="font-semibold text-lg text-slate-200">
+          Clipboard
+        </h2>
       </div>
 
       {/* Search */}
-      <div className="relative mb-4">
+      <div className="relative mb-4 shrink-0">
         <Search
           size={16}
           className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
@@ -40,13 +44,12 @@ export default function Sidebar() {
         whileHover={{ scale: 1.03 }}
         whileTap={{ scale: 0.96 }}
         onClick={() => addFolder("New Folder")}
-        className="w-full flex items-center justify-center gap-2 mb-6 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-sm font-medium text-white"
+        className="w-full flex items-center justify-center gap-2 mb-6 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-sm font-medium text-white shrink-0"
       >
         <Plus size={16} />
         New Folder
       </motion.button>
 
-      {/* Folder List */}
       {/* Folder List */}
       <div className="flex-1 overflow-y-auto pr-1 sidebar-scroll">
         <div className="space-y-2">
